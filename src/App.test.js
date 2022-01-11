@@ -1,16 +1,11 @@
-import { render, screen } from '@testing-library/react';
 import App from './App';
-
-import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-configure({ adapter: new Adapter() });
+import { mount } from 'enzyme';
 
 describe('Counter Testing', () => {
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<App/> )
+    wrapper = mount(<App/> )
   });
 
   test('Render the title of the counter.', () => {
@@ -38,6 +33,11 @@ describe('Counter Testing', () => {
   test('Render the click event of decrement button and counter value', () => {
     wrapper.find('#increment-btn').simulate('click');
     expect(wrapper.find('#counter-value').text()).toBe('1')
+    wrapper.find('#decrement-btn').simulate('click');
+    expect(wrapper.find('#counter-value').text()).toBe('0')
+  })
+
+  test('Render Click event when 0 to not be negative', () => {
     wrapper.find('#decrement-btn').simulate('click');
     expect(wrapper.find('#counter-value').text()).toBe('0')
   })
